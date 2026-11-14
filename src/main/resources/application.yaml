@@ -1,3 +1,5 @@
 spring:
   application:
-    name: MyBookStore-SSM-demo
+    name: MyBookStore-SSM
+  profiles:
+    active: dev

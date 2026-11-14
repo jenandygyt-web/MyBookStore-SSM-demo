@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://127.0.0.1:3307/MyPetStore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai"
+    username: root
+    password: 123456
+    hikari:
+      connection-init-sql: "SET time_zone = '+08:00'"
+  sql:
+    init:
+      mode: never
