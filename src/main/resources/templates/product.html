@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${book.title})}">
+  <title>图书详情 · MyBookStore</title>
+</head>
+<body class="page-product">
+
+<header th:replace="~{fragments/layout :: header('category')}"></header>
+
+<main>
+  <div class="wrap">
+    <nav class="breadcrumb" style="margin-top: 26px;">
+      <a th:href="@{/home}">首页</a><span>/</span>
+      <a th:href="@{/category}">全部图书</a><span>/</span>
+      <a th:href="@{/category(c=${book.categoryCode})}" th:text="${book.categoryName}">文学小说</a><span>/</span>
+      <b th:text="${book.title}">活着</b>
+    </nav>
+  </div>
+
+  <section class="wrap product">
+    <div class="product__grid">
+      <div class="product__media">
+        <div class="product__cover">
+          <span th:replace="~{fragments/layout :: cover(${book})}"></span>
+        </div>
+        <div class="product__badges">
+          <span class="tag tag--accent">正版保障</span>
+          <span class="tag">满 ¥99 包邮</span>
+          <span class="tag">七天退换</span>
+        </div>
+      </div>
+
+      <div class="product__info">
+        <span class="product__cat" th:text="${book.categoryName} + ' / ' + ${book.tag}">文学小说 / 畅销</span>
+        <h1 class="product__title" th:text="${book.title}">活着</h1>
+        <p class="product__author">
+          <span th:text="${book.author}">余华</span>
+          <span class="muted"> 著 · </span>
+          <span th:text="${book.publisher}">作家出版社</span>
+        </p>
+
+        <div class="product__rating">
+          <span class="rating">★★★★★ <b th:text="${book.rating}">9.4</b></span>
+          <span th:text="${book.sales} + ' 人已购买'">3260 人已购买</span>
+          <span>库存 <b th:text="${book.stock}">126</b> 件</span>
+        </div>
+
+        <p class="product__summary" th:text="${book.summary}">一个人和他命运之间的友情。</p>
+
+        <div class="price-panel">
+          <span class="price-now">¥<span th:text="${#numbers.formatDecimal(book.price,1,2)}">28.00</span></span>
+          <span class="price-was" th:if="${book.discounted}" th:text="'¥' + ${#numbers.formatDecimal(book.originalPrice,1,2)}">¥45.00</span>
+          <span class="discount" th:if="${book.discounted}" th:text="${book.discountPercent} + ' 折'">62 折</span>
+          <span class="stock">现货 · 48 小时内发货</span>
+        </div>
+
+        <div class="product__benefits">
+          <span><i>✓</i>出版社正版直供</span>
+          <span><i>✓</i>下单满 ¥99 免运费</span>
+          <span><i>✓</i>签收后 7 天无理由退换</span>
+        </div>
+
+        <div class="buy-row">
+          <div class="qty">
+            <button type="button" data-qty-step="-1" aria-label="减少数量">−</button>
+            <input id="qty" type="text" value="1" inputmode="numeric" data-qty-input aria-label="购买数量">
+            <button type="button" data-qty-step="1" aria-label="增加数量">＋</button>
+          </div>
+          <a class="btn btn--accent" th:href="@{/cart}">加入购物车</a>
+          <a class="btn btn--ghost" th:href="@{/cart}">立即购买</a>
+        </div>
+
+        <div class="product__meta">
+          <span><b>出版社</b>　<span th:text="${book.publisher}">作家出版社</span></span>
+          <span><b>出版时间</b>　<span th:text="${book.pubDate}">2012-08</span></span>
+          <span><b>ISBN</b>　<span th:text="${book.isbn}">9787506365437</span></span>
+          <span><b>页数</b>　<span th:text="${book.pages} + ' 页'">191 页</span></span>
+          <span><b>装帧</b>　平装</span>
+          <span><b>开本</b>　32 开</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="detail-nav">
+      <a href="#intro">内容简介</a>
+      <a href="#author">作者简介</a>
+      <a href="#toc" th:if="${book.toc != null}">目录</a>
+      <a href="#buy">购买须知</a>
+    </nav>
+
+    <div class="detail-grid">
+      <div class="detail-main">
+        <div class="detail-block" id="intro">
+          <h2>内容简介</h2>
+          <div class="prose">
+            <p th:text="${book.intro}">《活着》讲述了福贵的一生……</p>
+            <p>本书由出版社正版授权，纸张与印刷以实物为准。如遇版本更新，封面可能略有差异，不影响内容。</p>
+          </div>
+        </div>
+
+        <div class="detail-block" id="author">
+          <h2>作者简介</h2>
+          <div class="prose">
+            <p th:text="${book.authorBio}">余华，当代作家……</p>
+          </div>
+        </div>
+
+        <div class="detail-block" id="toc" th:if="${book.toc != null}">
+          <h2>目录</h2>
+          <ul class="toc">
+            <li th:each="t : ${book.toc}" th:text="${t}">中文版自序</li>
+          </ul>
+        </div>
+
+        <div class="detail-block" id="buy">
+          <h2>购买须知</h2>
+          <div class="prose">
+            <p>下单后 48 小时内发货，节假日顺延。满 ¥99 免运费，未满收取 ¥8 运费。</p>
+            <p>支持七天无理由退换，图书需保持塑封完整、无阅读痕迹。发票可在下单备注中申请。</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="detail-side">
+        <div class="side-card">
+          <h3>这本书适合</h3>
+          <ul class="toc">
+            <li>想认真读一本好书的你</li>
+            <li>喜欢纸质书手感与收藏的人</li>
+            <li>正在寻找礼物的读者</li>
+          </ul>
+        </div>
+        <div class="side-card">
+          <h3>服务承诺</h3>
+          <p class="filter-note">正版保障 · 满 99 包邮 · 七天退换 · 客服在线 9:00–21:00</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">YOU MAY ALSO LIKE</span>
+          <h2>你可能还喜欢</h2>
+        </div>
+        <a class="link-more" th:href="@{/category(c=${book.categoryCode})}">更多<span th:text="${book.categoryName}">文学小说</span> →</a>
+      </div>
+      <div class="book-grid">
+        <th:block th:each="r : ${related}">
+          <article th:replace="~{fragments/layout :: bookCard(${r})}"></article>
+        </th:block>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

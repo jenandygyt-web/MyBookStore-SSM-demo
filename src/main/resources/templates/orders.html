@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('我的订单')}">
+  <title>我的订单 · MyBookStore</title>
+</head>
+<body class="page-account">
+
+<header th:replace="~{fragments/layout :: header('orders')}"></header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb">
+        <a th:href="@{/home}">首页</a><span>/</span><b>我的订单</b>
+      </nav>
+      <div class="page-head__row">
+        <div>
+          <h1>我的订单</h1>
+          <p>这里记录了你与这些书相遇的每一次。</p>
+        </div>
+        <span class="head-note">共 <b th:text="${#lists.size(orders)}">3</b> 笔订单</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap account">
+    <aside class="account-nav">
+      <a th:href="@{/profile}">个人资料</a>
+      <a class="is-active" th:href="@{/orders}">我的订单</a>
+      <a th:href="@{/password}">修改密码</a>
+      <a th:href="@{/login}">退出登录</a>
+    </aside>
+
+    <section>
+      <div class="order-tabs">
+        <button class="tab is-active" type="button" data-order-tab="all">全部</button>
+        <button class="tab" type="button" data-order-tab="SHIPPING">待发货</button>
+        <button class="tab" type="button" data-order-tab="DONE">已完成</button>
+      </div>
+
+      <article class="order-card" th:each="o : ${orders}" th:attr="data-order-status=${o.status}">
+        <div class="order-card__head">
+          <b th:text="'订单号 ' + ${o.no}">订单号 MB20261115001</b>
+          <span th:text="${o.date}">2026-11-15</span>
+          <span th:text="${o.itemCount} + ' 件商品'">2 件商品</span>
+          <span class="order-status"
+                th:classappend="${o.status == 'DONE'} ? ' order-status--done' : ''"
+                th:text="${o.statusText}">待发货</span>
+        </div>
+
+        <div class="order-line" th:each="line : ${o.lines}">
+          <a th:href="@{/product/{sku}(sku=${line.book.sku})}">
+            <span th:replace="~{fragments/layout :: cover(${line.book})}"></span>
+          </a>
+          <div>
+            <a th:href="@{/product/{sku}(sku=${line.book.sku})}"><b th:text="${line.book.title}">活着</b></a>
+            <small th:text="${line.book.author} + ' · 数量 ' + ${line.qty}">余华 · 数量 1</small>
+          </div>
+          <span class="price">¥<span th:text="${#numbers.formatDecimal(line.lineTotal,1,2)}">28.00</span></span>
+        </div>
+
+        <div class="order-card__foot">
+          <span>共 <b th:text="${o.itemCount}">2</b> 件，合计</span>
+          <span class="price">¥<span th:text="${#numbers.formatDecimal(o.total,1,2)}">72.00</span></span>
+          <div class="order-actions">
+            <a class="btn btn--sm btn--ghost" th:href="@{/orders/{id}(id=${o.id})}">查看详情</a>
+            <a class="btn btn--sm btn--ghost" th:href="@{/cart}">再次购买</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="order-empty" th:if="${#lists.isEmpty(orders)}">还没有订单，去书店挑一本吧。</div>
+    </section>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

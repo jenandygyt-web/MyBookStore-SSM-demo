@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('全部图书')}">
+  <title>全部图书 · MyBookStore</title>
+</head>
+<body class="page-category">
+
+<header th:replace="~{fragments/layout :: header('category')}"></header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb">
+        <a th:href="@{/home}">首页</a><span>/</span>
+        <b th:text="${activeCategory != null ? activeCategory.name : '全部图书'}">全部图书</b>
+      </nav>
+      <div class="page-head__row">
+        <div>
+          <h1 th:text="${activeCategory != null ? activeCategory.name : '全部图书'}">全部图书</h1>
+          <p th:text="${activeCategory != null ? activeCategory.desc : '从文学到科学，从纸页到生活。这里是我们认真挑过的书。'}">从文学到科学……</p>
+        </div>
+        <span class="head-note" th:if="${keyword != ''}">
+          关键词「<b th:text="${keyword}">余华</b>」的搜索结果
+        </span>
+        <span class="head-note" th:unless="${keyword != ''}">共 6 个分类 · 每周更新</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap shop">
+    <!-- 筛选 -->
+    <aside class="filters">
+      <div class="filter-group">
+        <h3>图书分类</h3>
+        <div class="filter-list">
+          <a th:href="@{/category(q=${keyword}, p=${price}, sort=${sort})}"
+             th:classappend="${activeCategory == null} ? 'is-active' : ''">
+            <span>全部图书</span>
+            <span class="count" th:text="${categoryCounts['all']}">15</span>
+          </a>
+          <a th:each="cat : ${categories}"
+             th:href="@{/category(c=${cat.code}, q=${keyword}, p=${price}, sort=${sort})}"
+             th:classappend="${activeCategory != null and activeCategory.code == cat.code} ? 'is-active' : ''">
+            <span th:text="${cat.name}">文学小说</span>
+            <span class="count" th:text="${categoryCounts[cat.code]}">3</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>价格区间</h3>
+        <div class="filter-list">
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, sort=${sort})}"
+             th:classappend="${price == ''} ? 'is-active' : ''">不限价格</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p='under50', sort=${sort})}"
+             th:classappend="${price == 'under50'} ? 'is-active' : ''">¥ 50 以下</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p='50to100', sort=${sort})}"
+             th:classappend="${price == '50to100'} ? 'is-active' : ''">¥ 50 – 100</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p='over100', sort=${sort})}"
+             th:classappend="${price == 'over100'} ? 'is-active' : ''">¥ 100 以上</a>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>选书说明</h3>
+        <p class="filter-note">
+          不同批次印次可能封面略有差异，以实物为准。满 ¥99 包邮，支持七天无理由退换。
+        </p>
+      </div>
+    </aside>
+
+    <!-- 列表 -->
+    <section>
+      <div class="toolbar">
+        <span class="toolbar__count">共 <b th:text="${total}">15</b> 本图书</span>
+        <div class="sort-links">
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p=${price})}"
+             th:classappend="${sort == 'default'} ? 'is-active' : ''">综合</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p=${price}, sort='sales')}"
+             th:classappend="${sort == 'sales'} ? 'is-active' : ''">销量</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p=${price}, sort='rating')}"
+             th:classappend="${sort == 'rating'} ? 'is-active' : ''">评分</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p=${price}, sort='price-asc')}"
+             th:classappend="${sort == 'price-asc'} ? 'is-active' : ''">价格 ↑</a>
+          <a th:href="@{/category(c=${activeCategory != null ? activeCategory.code : ''}, q=${keyword}, p=${price}, sort='price-desc')}"
+             th:classappend="${sort == 'price-desc'} ? 'is-active' : ''">价格 ↓</a>
+        </div>
+      </div>
+
+      <div class="book-grid book-grid--shop" th:if="${not #lists.isEmpty(books)}">
+        <th:block th:each="b : ${books}">
+          <article th:replace="~{fragments/layout :: bookCard(${b})}"></article>
+        </th:block>
+      </div>
+
+      <div class="order-empty" th:if="${#lists.isEmpty(books)}">
+        <p>没有找到符合条件的图书。</p>
+        <a class="link-more" th:href="@{/category}">清空筛选条件 →</a>
+      </div>
+
+      <nav class="pagination" th:if="${not #lists.isEmpty(books)}" aria-label="分页">
+        <span class="page-btn is-active">1</span>
+        <span class="page-btn">2</span>
+        <span class="page-btn">3</span>
+        <span class="page-btn">→</span>
+      </nav>
+    </section>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

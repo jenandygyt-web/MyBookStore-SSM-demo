@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('首页')}">
+  <title>首页 · MyBookStore</title>
+</head>
+<body class="page-home">
+
+<header th:replace="~{fragments/layout :: header('home')}"></header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow">MYBOOKSTORE · 墨卷书城</span>
+        <h1>把世界，<br><em>读</em>给你听。</h1>
+        <p class="hero__lead">十五万册精选图书，从文学到科学，从纸页到生活。为每一次翻页，准备一个安静的理由。</p>
+
+        <form class="hero__search" th:action="@{/category}" method="get">
+          <input type="text" name="q" placeholder="试试搜索「马尔克斯」或「计算机系统」" aria-label="搜索图书">
+          <button type="submit">搜索</button>
+        </form>
+
+        <div class="hero__stats">
+          <span><b>15,000+</b><small>在售图书</small></span>
+          <span><b>48h</b><small>发货时效</small></span>
+          <span><b>7 天</b><small>无理由退换</small></span>
+        </div>
+      </div>
+
+      <div class="hero__stack">
+        <span th:replace="~{fragments/layout :: cover(${featured})}"></span>
+        <span th:replace="~{fragments/layout :: cover(${picks[1]})}"></span>
+        <span th:replace="~{fragments/layout :: cover(${newBooks[0]})}"></span>
+        <div class="hero__note">
+          <small>WEEKLY PICK · 本周主推</small>
+          <b th:text="${featured.title}">人类简史</b>
+          <a class="link-more" th:href="@{/product/{sku}(sku=${featured.sku})}">了解这本书 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分类导航 -->
+  <section class="cat-strip">
+    <div class="wrap">
+      <a class="cat-item" th:each="cat : ${categories}" th:href="@{/category(c=${cat.code})}">
+        <span class="cat-item__mark" th:text="${cat.mark}">文</span>
+        <b th:text="${cat.name}">文学小说</b>
+        <small th:text="${cat.en}">LITERATURE</small>
+      </a>
+    </div>
+  </section>
+
+  <!-- 新书上架 -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">NEW ARRIVALS</span>
+          <h2>新书上架</h2>
+        </div>
+        <div class="section-head__side">
+          <a class="link-more" th:href="@{/category}">查看全部图书 →</a>
+        </div>
+      </div>
+      <div class="book-grid">
+        <th:block th:each="b : ${newBooks}">
+          <article th:replace="~{fragments/layout :: bookCard(${b})}"></article>
+        </th:block>
+      </div>
+    </div>
+  </section>
+
+  <!-- 编辑推荐 -->
+  <section class="editors">
+    <div class="wrap editors__grid">
+      <div class="editors__media">
+        <span th:replace="~{fragments/layout :: cover(${featured})}"></span>
+      </div>
+      <div class="editors__copy">
+        <span class="eyebrow">EDITOR'S CHOICE · 编辑推荐</span>
+        <h2 th:text="${featured.title}">人类简史</h2>
+        <p th:text="${featured.summary}">从认知革命到人工智能，重新理解人类如何走到今天。</p>
+
+        <div class="editors__meta">
+          <span>评分 <strong th:text="${featured.rating}">9.1</strong></span>
+          <span th:text="${featured.publisher}">中信出版社</span>
+          <span class="price">¥<strong th:text="${#numbers.formatDecimal(featured.price,1,2)}">68.00</strong></span>
+        </div>
+
+        <p th:text="${featured.intro}">十万年前，地球上至少有六个人种……</p>
+
+        <div class="cta-row" style="margin-top: 26px;">
+          <a class="btn" th:href="@{/product/{sku}(sku=${featured.sku})}">阅读详情 →</a>
+          <a class="link-more" th:href="@{/cart}" style="color:#c9bca6;">加入购物车</a>
+        </div>
+
+        <div class="picks">
+          <a class="pick" th:each="p, it : ${picks}" th:if="${it.index > 0}" th:href="@{/product/{sku}(sku=${p.sku})}">
+            <span th:replace="~{fragments/layout :: cover(${p})}"></span>
+            <span class="pick__text">
+              <b th:text="${p.title}">活着</b>
+              <small th:text="${p.author} + ' · 编辑推荐'">余华 · 编辑推荐</small>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 本周热销 -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">BESTSELLERS</span>
+          <h2>本周热销</h2>
+        </div>
+        <div class="section-head__side">
+          <a class="link-more" th:href="@{/category(sort='sales')}">按销量浏览 →</a>
+        </div>
+      </div>
+
+      <div class="rank-list">
+        <a class="rank-row" th:each="b, it : ${ranking}" th:href="@{/product/{sku}(sku=${b.sku})}">
+          <span class="rank-row__no" th:text="${it.count < 10 ? '0' + it.count : it.count}">01</span>
+          <span th:replace="~{fragments/layout :: cover(${b})}"></span>
+          <span class="rank-row__info">
+            <b th:text="${b.title}">人类简史</b>
+            <small th:text="${b.author} + ' · ' + ${b.categoryName}">尤瓦尔·赫拉利 · 历史人文</small>
+          </span>
+          <span class="rank-row__price">
+            <span class="price">¥<strong th:text="${#numbers.formatDecimal(b.price,1,2)}">68.00</strong></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 引语 -->
+  <section class="quote-band">
+    <div class="wrap">
+      <blockquote>“阅读是一座随身携带的避难所。”</blockquote>
+      <cite>W. SOMERSET MAUGHAM · 毛姆</cite>
+    </div>
+  </section>
+
+  <!-- 服务承诺 -->
+  <section class="service-strip">
+    <div class="wrap">
+      <div class="service-item"><b>正版保障</b><small>出版社直供，防伪可查</small></div>
+      <div class="service-item"><b>满 99 包邮</b><small>全国大部分地区 48 小时发货</small></div>
+      <div class="service-item"><b>七天退换</b><small>签收后七天无理由退换</small></div>
+      <div class="service-item"><b>选书顾问</b><small>按兴趣推荐，而不是按销量</small></div>
+    </div>
+  </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

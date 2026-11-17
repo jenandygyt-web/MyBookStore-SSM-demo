@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('个人资料')}">
+  <title>个人资料 · MyBookStore</title>
+</head>
+<body class="page-account">
+
+<header th:replace="~{fragments/layout :: header('profile')}"></header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb">
+        <a th:href="@{/home}">首页</a><span>/</span><b>会员中心</b>
+      </nav>
+      <div class="page-head__row">
+        <div>
+          <h1>会员中心</h1>
+          <p>管理你的账号信息、收货地址与阅读偏好。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap account">
+    <aside class="account-nav">
+      <a class="is-active" th:href="@{/profile}">个人资料</a>
+      <a th:href="@{/orders}">我的订单</a>
+      <a th:href="@{/password}">修改密码</a>
+      <a th:href="@{/login}">退出登录</a>
+    </aside>
+
+    <section class="account-body">
+      <div class="account-head">
+        <span class="avatar" th:text="${#strings.substring(demoUser,0,1)}">陈</span>
+        <div>
+          <h1 th:text="${demoUser}">陈默</h1>
+          <div class="account-meta">
+            <span>青藤会员</span>
+            <span>加入于 2025 年 3 月</span>
+            <span th:text="'@' + ${demoUsername}">@chenmo</span>
+          </div>
+        </div>
+      </div>
+
+      <form th:action="@{/profile}" method="post">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="username">登录名</label>
+            <input id="username" type="text" th:value="${demoUsername}" disabled>
+          </div>
+          <div class="form-field">
+            <label for="displayName">昵称</label>
+            <input id="displayName" type="text" th:value="${demoUser}">
+          </div>
+          <div class="form-field">
+            <label for="email">邮箱</label>
+            <input id="email" type="email" th:value="${demoEmail}">
+          </div>
+          <div class="form-field">
+            <label for="phone">手机号</label>
+            <input id="phone" type="tel" th:value="${demoPhone}">
+          </div>
+          <div class="form-field">
+            <label for="birthday">生日</label>
+            <input id="birthday" type="date" value="1998-06-18">
+          </div>
+          <div class="form-field">
+            <label for="level">会员等级</label>
+            <input id="level" type="text" value="青藤会员" disabled>
+          </div>
+          <div class="form-field full">
+            <label for="address">默认收货地址</label>
+            <textarea id="address" th:text="${demoAddress}">上海市杨浦区邯郸路 220 号 3 号楼 502 室</textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn--accent" type="submit">保存修改</button>
+          <small>演示环境：保存后仅刷新页面，不会写入数据库。</small>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

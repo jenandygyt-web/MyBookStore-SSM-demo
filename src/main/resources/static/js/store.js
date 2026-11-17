@@ -1,161 +1,127 @@
+/* MyBookStore · 演示交互：数量步进、购物车合计、登录/订单标签页 */
 (function () {
-  const cartTable = document.getElementById("cartTable");
-  if (!cartTable) {
-    return;
+  "use strict";
+
+  function money(value) {
+    return value.toFixed(2);
   }
 
-  const toMoney = (n) => `$${n.toFixed(2)}`;
-
-  function sanitizeQty(input) {
-    let value = parseInt(input.value, 10);
-    if (Number.isNaN(value) || value < 1) {
-      value = 1;
-    }
-    if (value > 99) {
-      value = 99;
-    }
-    input.value = String(value);
-    return value;
-  }
-
-  function recalc() {
-    const rows = cartTable.querySelectorAll("tbody tr");
-    let itemCount = 0;
-    let itemsTotal = 0;
-
-    rows.forEach((row) => {
-      const price = parseFloat(row.getAttribute("data-price") || "0");
-      const qtyInput = row.querySelector('[data-role="qty"]');
-      const lineNode = row.querySelector('[data-role="lineTotal"]');
-      const selectInput = row.querySelector('[data-role="select-item"]');
-      if (!qtyInput || !lineNode) {
+  /* ---------- 数量步进 ---------- */
+  document.querySelectorAll("[data-qty-step]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var box = button.closest(".qty");
+      var input = box ? box.querySelector("[data-qty-input]") : null;
+      if (!input) {
         return;
       }
-      const qty = sanitizeQty(qtyInput);
-      const lineTotal = price * qty;
-      lineNode.textContent = toMoney(lineTotal);
-      const selected = !selectInput || selectInput.checked;
-      row.classList.toggle("is-unselected", !selected);
-      if (!selected) {
-        return;
+      var step = parseInt(button.getAttribute("data-qty-step"), 10) || 0;
+      var current = parseInt(input.value, 10);
+      if (isNaN(current)) {
+        current = 1;
       }
-      itemCount += qty;
-      itemsTotal += lineTotal;
+      var next = Math.min(99, Math.max(1, current + step));
+      input.value = next;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
     });
-
-    const shipping = itemCount > 0 ? 8 : 0;
-    const discount = itemCount >= 3 ? 5 : 0;
-    const grand = itemsTotal + shipping - discount;
-
-    const itemCountNode = document.getElementById("itemCount");
-    const itemsTotalNode = document.getElementById("itemsTotal");
-    const grandTotalNode = document.getElementById("grandTotal");
-    const shippingNode = document.getElementById("shippingTotal");
-    const discountNode = document.getElementById("discountTotal");
-    const couponNode = document.getElementById("couponStatus");
-    const headerCountNode = document.getElementById("headerCartCount");
-    const emptyNode = document.getElementById("cartEmpty");
-    const checkoutNode = document.getElementById("checkoutButton");
-    const selectAllNode = document.getElementById("selectAll");
-
-    if (itemCountNode) {
-      itemCountNode.textContent = String(itemCount);
-    }
-    if (itemsTotalNode) {
-      itemsTotalNode.textContent = toMoney(itemsTotal);
-    }
-    if (grandTotalNode) {
-      grandTotalNode.textContent = toMoney(grand);
-    }
-    if (shippingNode) {
-      shippingNode.textContent = toMoney(shipping);
-    }
-    if (discountNode) {
-      discountNode.textContent = discount > 0 ? `-${toMoney(discount)}` : toMoney(0);
-    }
-    if (couponNode) {
-      couponNode.textContent = discount > 0 ? "已使用" : "满 3 件可用";
-      couponNode.classList.toggle("is-pending", discount === 0);
-    }
-    if (headerCountNode) {
-      headerCountNode.textContent = String(itemCount);
-    }
-    if (emptyNode) {
-      emptyNode.hidden = rows.length > 0;
-    }
-    if (checkoutNode) {
-      checkoutNode.classList.toggle("is-disabled", itemCount === 0);
-      checkoutNode.setAttribute("aria-disabled", itemCount === 0 ? "true" : "false");
-    }
-    if (selectAllNode) {
-      const itemChecks = cartTable.querySelectorAll('[data-role="select-item"]');
-      const checkedCount = cartTable.querySelectorAll('[data-role="select-item"]:checked').length;
-      selectAllNode.checked = itemChecks.length > 0 && checkedCount === itemChecks.length;
-      selectAllNode.indeterminate = checkedCount > 0 && checkedCount < itemChecks.length;
-    }
-  }
-
-  cartTable.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
-    }
-
-    const action = target.getAttribute("data-action");
-    if (!action) {
-      return;
-    }
-
-    const row = target.closest("tr");
-    if (!row) {
-      return;
-    }
-
-    if (action === "remove") {
-      event.preventDefault();
-      row.remove();
-      recalc();
-      return;
-    }
-
-    const qtyInput = row.querySelector('[data-role="qty"]');
-    if (!qtyInput) {
-      return;
-    }
-
-    const current = sanitizeQty(qtyInput);
-    if (action === "plus") {
-      qtyInput.value = String(current + 1);
-      recalc();
-    }
-    if (action === "minus") {
-      qtyInput.value = String(Math.max(1, current - 1));
-      recalc();
-    }
   });
 
-  cartTable.addEventListener("change", (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) {
-      return;
-    }
-    if (target.getAttribute("data-role") === "qty") {
-      recalc();
-    }
-    if (target.getAttribute("data-role") === "select-item") {
-      recalc();
-    }
-  });
+  /* ---------- 购物车合计 ---------- */
+  var cartTable = document.getElementById("cartTable");
+  if (cartTable) {
+    var rows = Array.prototype.slice.call(cartTable.querySelectorAll("tbody tr"));
 
-  const selectAll = document.getElementById("selectAll");
-  if (selectAll) {
-    selectAll.addEventListener("change", () => {
-      cartTable.querySelectorAll('[data-role="select-item"]').forEach((input) => {
-        input.checked = selectAll.checked;
+    var recalc = function () {
+      var subtotal = 0;
+      var count = 0;
+
+      rows.forEach(function (row) {
+        if (row.hidden) {
+          return;
+        }
+        var price = parseFloat(row.getAttribute("data-price")) || 0;
+        var input = row.querySelector("[data-qty-input]");
+        var qty = parseInt(input ? input.value : "1", 10);
+        if (isNaN(qty) || qty < 1) {
+          qty = 1;
+        }
+        if (qty > 99) {
+          qty = 99;
+        }
+        if (input) {
+          input.value = qty;
+        }
+        var lineTotal = price * qty;
+        var lineNode = row.querySelector("[data-line-total]");
+        if (lineNode) {
+          lineNode.textContent = money(lineTotal);
+        }
+        subtotal += lineTotal;
+        count += qty;
       });
-      recalc();
+
+      var shipping = subtotal === 0 || subtotal >= 99 ? 0 : 8;
+      var total = subtotal + shipping;
+
+      setText("[data-subtotal]", money(subtotal));
+      setText("[data-shipping]", money(shipping));
+      setText("[data-total]", money(total));
+      setText("[data-item-count]", String(count));
+    };
+
+    var setText = function (selector, value) {
+      document.querySelectorAll(selector).forEach(function (node) {
+        node.textContent = value;
+      });
+    };
+
+    cartTable.addEventListener("input", function (event) {
+      if (event.target.matches("[data-qty-input]")) {
+        recalc();
+      }
     });
+
+    cartTable.addEventListener("click", function (event) {
+      var remove = event.target.closest("[data-remove]");
+      if (!remove) {
+        return;
+      }
+      event.preventDefault();
+      var row = remove.closest("tr");
+      if (row) {
+        row.hidden = true;
+        recalc();
+      }
+    });
+
+    recalc();
   }
 
-  recalc();
+  /* ---------- 登录 / 注册切换 ---------- */
+  document.querySelectorAll("[data-tab]").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      var group = tab.closest(".tabs");
+      if (group) {
+        group.querySelectorAll("[data-tab]").forEach(function (item) {
+          item.classList.toggle("is-active", item === tab);
+        });
+      }
+      var name = tab.getAttribute("data-tab");
+      document.querySelectorAll("[data-panel]").forEach(function (panel) {
+        panel.hidden = panel.getAttribute("data-panel") !== name;
+      });
+    });
+  });
+
+  /* ---------- 订单状态筛选 ---------- */
+  document.querySelectorAll("[data-order-tab]").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      document.querySelectorAll("[data-order-tab]").forEach(function (item) {
+        item.classList.toggle("is-active", item === tab);
+      });
+      var filter = tab.getAttribute("data-order-tab");
+      document.querySelectorAll("[data-order-status]").forEach(function (card) {
+        card.hidden = filter !== "all" && card.getAttribute("data-order-status") !== filter;
+      });
+    });
+  });
 })();

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('登录')}">
+  <title>登录 · MyBookStore</title>
+</head>
+<body>
+
+<main class="auth">
+  <section class="auth__visual">
+    <a class="brand" th:href="@{/home}">
+      <span class="brand__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 6.6C10.3 5.2 8 4.6 4.8 4.6v13.2c3.2 0 5.5.6 7.2 2 1.7-1.4 4-2 7.2-2V4.6c-3.2 0-5.5.6-7.2 2Z"/>
+          <path d="M12 6.6v13.2"/>
+        </svg>
+      </span>
+      <span class="brand__text"><b>MyBookStore</b><small>墨卷书城</small></span>
+    </a>
+
+    <div class="auth__quote">
+      “读书是在别人思想的帮助下，<br>建立起自己的思想。”
+      <small>NIKOLAI RUBKIN · 鲁巴金</small>
+    </div>
+
+    <div class="auth__stack">
+      <th:block th:each="b : ${picks}">
+        <span th:replace="~{fragments/layout :: cover(${b})}"></span>
+      </th:block>
+    </div>
+  </section>
+
+  <section class="auth__panel">
+    <div class="auth-card">
+      <span class="eyebrow">MEMBER SIGN IN</span>
+      <h1>回到你的书架</h1>
+      <p class="sub">登录后可同步购物车、查看订单与收藏。</p>
+
+      <div class="tabs">
+        <button class="tab is-active" type="button" data-tab="login">登录</button>
+        <button class="tab" type="button" data-tab="register">注册</button>
+      </div>
+
+      <form data-panel="login" th:action="@{/login}" method="post">
+        <div class="form-field">
+          <label for="username">账号 / 邮箱</label>
+          <input id="username" name="username" type="text" placeholder="chenmo" autocomplete="username">
+        </div>
+        <div class="form-field">
+          <label for="password">密码</label>
+          <input id="password" name="password" type="password" placeholder="请输入密码" autocomplete="current-password">
+        </div>
+        <div class="form-check">
+          <label><input type="checkbox" name="remember" checked> 记住我</label>
+          <a href="#">忘记密码？</a>
+        </div>
+        <button class="btn btn--accent btn--block" type="submit">登录</button>
+      </form>
+
+      <form data-panel="register" th:action="@{/register}" method="post" hidden>
+        <div class="form-field">
+          <label for="displayName">昵称</label>
+          <input id="displayName" name="displayName" type="text" placeholder="想让我们怎么称呼你">
+        </div>
+        <div class="form-field">
+          <label for="regUsername">账号</label>
+          <input id="regUsername" name="username" type="text" placeholder="4–20 位字母或数字">
+        </div>
+        <div class="form-field">
+          <label for="regEmail">邮箱</label>
+          <input id="regEmail" name="email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label for="regPassword">密码</label>
+          <input id="regPassword" name="password" type="password" placeholder="至少 6 位">
+        </div>
+        <div class="form-check">
+          <label><input type="checkbox" checked> 我已阅读并同意《用户协议》</label>
+        </div>
+        <button class="btn btn--accent btn--block" type="submit">创建账号</button>
+      </form>
+
+      <div class="divider">或使用</div>
+      <div class="social-row">
+        <button class="social-btn" type="button">微信登录</button>
+        <button class="social-btn" type="button">支付宝登录</button>
+      </div>
+
+      <p class="auth-foot">
+        演示账号：chenmo / 123456（仅作展示，提交后返回首页）<br>
+        <a th:href="@{/home}">← 先逛逛书店</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>
