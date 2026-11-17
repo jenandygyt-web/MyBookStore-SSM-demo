@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        .card { border: 1px solid #ccc; border-radius: 8px; padding: 1rem; max-width: 24rem; }
+        .card p { margin: 0.35rem 0; }
+        form { margin-bottom: 1rem; }
+        .msg { color: #2e7d32; font-weight: bold; }
+        a { margin-right: 0.75rem; }
+    </style>
+</head>
+<body>
+<h2 th:text="${message}">Thymeleaf 初始化成功！</h2>
+
+<form th:action="@{/demo/user/page}" method="get">
+    <label for="username">用户名：</label>
+    <input id="username" type="text" name="username" th:value="${username}">
+    <button type="submit">查询</button>
+</form>
+
+<p>
+    快速切换：
+    <a th:href="@{/demo/user/page(username='alice')}">alice</a>
+    <a th:href="@{/demo/user/page(username='bob')}">bob</a>
+</p>
+
+<div class="card" th:if="${user != null}">
+    <p>编号：<span th:text="${user.id()}">-</span></p>
+    <p>登录名：<span th:text="${user.username()}">-</span></p>
+    <p>显示名：<span th:text="${user.displayName()}">-</span></p>
+    <p>角色：<span th:text="${user.role()}">-</span></p>
+    <p>状态：<span th:text="${user.status()}">-</span></p>
+</div>
+
+<div class="card" th:unless="${user != null}">
+    <p>没有找到该用户。</p>
+</div>
+
+</body>
+</html>
