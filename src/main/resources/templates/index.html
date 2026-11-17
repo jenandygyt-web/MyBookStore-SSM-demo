@@ -1,77 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyPetStore | 欢迎</title>
-  <link rel="stylesheet" href="css/jpetstore.css" />
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('欢迎')}">
+  <title>欢迎 · MyBookStore</title>
 </head>
-<body class="welcome-page">
-  <main class="welcome-shell">
-    <section class="welcome-visual" aria-label="MyPetStore 品牌介绍">
-      <img src="images/products/FL-DLH-02/2.jpg" alt="温暖居家环境中的猫咪" />
-      <div class="welcome-visual__shade"></div>
+<body>
 
-      <a class="welcome-brand welcome-brand--light" href="Main.html">
-        <span><img src="images/logo.png" alt="" /></span>
-        <b>MyPetStore</b>
-      </a>
+<main class="auth">
+  <section class="auth__visual">
+    <a class="brand" th:href="@{/home}">
+      <span class="brand__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 6.6C10.3 5.2 8 4.6 4.8 4.6v13.2c3.2 0 5.5.6 7.2 2 1.7-1.4 4-2 7.2-2V4.6c-3.2 0-5.5.6-7.2 2Z"/>
+          <path d="M12 6.6v13.2"/>
+        </svg>
+      </span>
+      <span class="brand__text"><b>MyBookStore</b><small>墨卷书城</small></span>
+    </a>
 
-      <div class="welcome-visual__copy">
-        <span class="welcome-eyebrow">WELCOME HOME</span>
-        <h1>让每一份陪伴，<br />都被认真对待。</h1>
-        <p>严选健康宠物与日常用品，为你和毛孩子准备一个更安心、更温暖的家。</p>
+    <div class="auth__quote">
+      “把世界，<br>读给你听。”
+      <small>MYBOOKSTORE · 墨卷书城</small>
+    </div>
+
+    <div class="auth__stack">
+      <th:block th:each="b : ${picks}">
+        <span th:replace="~{fragments/layout :: cover(${b})}"></span>
+      </th:block>
+    </div>
+  </section>
+
+  <section class="auth__panel">
+    <div class="auth-card">
+      <span class="eyebrow">WELCOME HOME</span>
+      <h1>欢迎来到墨卷书城</h1>
+      <p class="sub">登录后可查看订单、收藏图书，并获得更适合你的阅读推荐。</p>
+
+      <a class="btn btn--accent btn--block" th:href="@{/login}">账号登录 / 注册</a>
+
+      <div class="divider">或者</div>
+
+      <div class="social-row">
+        <button class="social-btn" type="button">微信快捷登录</button>
+        <button class="social-btn" type="button">支付宝登录</button>
       </div>
 
-      <div class="welcome-points">
-        <span><b>7 DAYS</b><small>健康保障</small></span>
-        <span><b>100+</b><small>严选好物</small></span>
-        <span><b>24H</b><small>贴心服务</small></span>
-      </div>
-    </section>
+      <a class="btn btn--ghost btn--block mt-16" th:href="@{/home}">先逛逛书店 →</a>
 
-    <section class="welcome-panel">
-      <div class="welcome-panel__inner">
-        <a class="welcome-brand welcome-brand--dark" href="Main.html">
-          <span><img src="images/logo.png" alt="" /></span>
-          <div><b>MyPetStore</b><small>陪它好好生活</small></div>
-        </a>
+      <label class="agreement">
+        <input type="checkbox" checked>
+        <span>我已阅读并同意《用户协议》和《隐私政策》</span>
+      </label>
 
-        <div class="welcome-intro">
-          <span class="welcome-eyebrow">PET STORE · V 1.0</span>
-          <h2>欢迎来到宠物商店</h2>
-          <p>登录后可查看订单、收藏商品并获得更适合你的养宠推荐。</p>
-        </div>
+      <p class="auth-foot">课程演示环境 · 无需真实账号<br>© <span th:text="${year}">2026</span> MyBookStore 墨卷书城</p>
+    </div>
+  </section>
+</main>
 
-        <div class="welcome-actions">
-          <a class="welcome-action welcome-action--wechat" href="SignonForm.html">
-            <img src="images/logo-wechat.png" alt="" />
-            <span><b>微信快捷登录</b><small>安全、便捷地进入商城</small></span>
-            <i>→</i>
-          </a>
-
-          <a class="welcome-action welcome-action--account" href="SignonForm.html">
-            <span class="welcome-action__icon" aria-hidden="true">♙</span>
-            <span><b>账号登录 / 注册</b><small>使用用户名和密码登录</small></span>
-            <i>→</i>
-          </a>
-
-          <div class="welcome-divider"><span>或者</span></div>
-
-          <a class="welcome-guest" href="Main.html">先逛逛商城 <span>→</span></a>
-        </div>
-
-        <label class="welcome-agreement">
-          <input type="checkbox" checked />
-          <span>我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></span>
-        </label>
-      </div>
-
-      <footer class="welcome-footer">
-        <span th:text="|© ${year} MyPetStore|">© 2026 MyPetStore</span>
-        <span>认真挑选每一份陪伴</span>
-      </footer>
-    </section>
-  </main>
 </body>
 </html>

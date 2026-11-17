@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('页面未找到')}">
+  <title>页面未找到 · MyBookStore</title>
+</head>
+<body class="page-account">
+
+<header th:replace="~{fragments/layout :: header('')}"></header>
+
+<main>
+  <section class="error-page">
+    <div class="wrap">
+      <div class="error-card">
+        <span class="eyebrow">MYBOOKSTORE · 404</span>
+        <h1 th:text="${status} ?: '404'">404</h1>
+        <h2 th:text="${status} == 404 ? '页面未找到' : '页面暂时无法显示'">页面未找到</h2>
+        <p class="muted">你要找的书页可能已被翻过，或者链接地址有误。</p>
+        <div class="cta-row" style="justify-content: center; margin-top: 26px;">
+          <a class="btn btn--accent" th:href="@{/home}">回到首页</a>
+          <a class="btn btn--ghost" th:href="@{/category}">去逛逛书店</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

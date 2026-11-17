@@ -1,0 +1,136 @@
+{
+  "categories": [
+    { "code": "lit",  "name": "文学小说", "en": "LITERATURE", "mark": "文", "desc": "在别人的故事里，照见自己。" },
+    { "code": "tech", "name": "计算机技术", "en": "TECHNOLOGY", "mark": "计", "desc": "写给每一个想读懂系统的人。" },
+    { "code": "hist", "name": "历史人文", "en": "HISTORY", "mark": "史", "desc": "过去并未过去，它只是换了名字。" },
+    { "code": "biz",  "name": "经济管理", "en": "BUSINESS", "mark": "商", "desc": "把复杂世界，换算成可行动的选择。" },
+    { "code": "kids", "name": "少儿读物", "en": "CHILDREN", "mark": "童", "desc": "把好奇心，交给会发光的纸页。" },
+    { "code": "art",  "name": "艺术生活", "en": "ART & LIFE", "mark": "艺", "desc": "生活之上，还有一点无用之美。" }
+  ],
+  "books": [
+    {
+      "sku": "BK-001", "title": "活着", "author": "余华", "categoryCode": "lit", "categoryName": "文学小说",
+      "price": 28.00, "originalPrice": 45.00, "stock": 126, "publisher": "作家出版社", "isbn": "9787506365437",
+      "pages": 191, "pubDate": "2012-08", "rating": 9.4, "tag": "畅销", "sales": 3260, "tone": "rust", "featured": true,
+      "summary": "一个人和他命运之间的友情。",
+      "intro": "《活着》讲述了福贵的一生：从富家少爷到一无所有，亲人一个个离去，他仍与一头老牛平静地活着。余华用极简的笔触，写出了人如何承受苦难，又如何与命运和解。",
+      "authorBio": "余华，当代作家。代表作《活着》《许三观卖血记》《兄弟》，作品被译介为四十多种语言。",
+      "toc": ["中文版自序", "活着", "外文版评论摘要"]
+    },
+    {
+      "sku": "BK-002", "title": "百年孤独", "author": "加西亚·马尔克斯", "categoryCode": "lit", "categoryName": "文学小说",
+      "price": 55.00, "originalPrice": 68.00, "stock": 88, "publisher": "南海出版公司", "isbn": "9787544253994",
+      "pages": 360, "pubDate": "2011-06", "rating": 9.3, "tag": "经典", "sales": 2890, "tone": "forest", "featured": false,
+      "summary": "布恩迪亚家族七代人的传奇，魔幻现实主义的巅峰之作。",
+      "intro": "马孔多小镇上，布恩迪亚家族七代人的命运在循环中展开。马尔克斯用瑰丽的想象，写尽孤独、爱情与遗忘，也写尽拉丁美洲的百年沧桑。",
+      "authorBio": "加西亚·马尔克斯（1927—2014），哥伦比亚作家，1982年诺贝尔文学奖得主。"
+    },
+    {
+      "sku": "BK-003", "title": "挪威的森林", "author": "村上春树", "categoryCode": "lit", "categoryName": "文学小说",
+      "price": 42.00, "originalPrice": 49.00, "stock": 64, "publisher": "上海译文出版社", "isbn": "9787532792269",
+      "pages": 380, "pubDate": "2023-05", "rating": 8.6, "tag": "新书", "sales": 980, "tone": "navy", "featured": false,
+      "summary": "关于青春、孤独与爱的经典长篇。",
+      "intro": "三十七岁的渡边在飞机上听到披头士的《挪威的森林》，回忆被拉回六十年代末的东京。直子、绿子、木月……那些在青春里走散的人，重新浮现。",
+      "authorBio": "村上春树，日本作家，代表作《挪威的森林》《海边的卡夫卡》《1Q84》。"
+    },
+    {
+      "sku": "BK-004", "title": "深入理解计算机系统（原书第3版）", "author": "Randal E. Bryant", "categoryCode": "tech", "categoryName": "计算机技术",
+      "price": 139.00, "originalPrice": 169.00, "stock": 42, "publisher": "机械工业出版社", "isbn": "9787111544937",
+      "pages": 737, "pubDate": "2016-11", "rating": 9.8, "tag": "经典", "sales": 1560, "tone": "ink", "featured": true,
+      "summary": "从程序员视角理解计算机系统，CSAPP 经典教材。",
+      "intro": "本书从程序员的角度讲解计算机系统：数据表示、汇编、处理器、存储层次、链接、异常控制流、虚拟内存、并发与网络编程，被誉为“计算机科学入门第一书”。",
+      "authorBio": "Randal E. Bryant，卡内基梅隆大学计算机科学教授；David R. O'Hallaron，同校教授。",
+      "toc": ["第1章 计算机系统漫游", "第2章 信息的表示和处理", "第3章 程序的机器级表示", "第6章 存储器层次结构", "第9章 虚拟内存"]
+    },
+    {
+      "sku": "BK-005", "title": "代码整洁之道", "author": "Robert C. Martin", "categoryCode": "tech", "categoryName": "计算机技术",
+      "price": 69.00, "originalPrice": 79.00, "stock": 73, "publisher": "人民邮电出版社", "isbn": "9787115216878",
+      "pages": 388, "pubDate": "2020-01", "rating": 9.1, "tag": "畅销", "sales": 1120, "tone": "ocean", "featured": false,
+      "summary": "写出让同事愿意读的代码：命名、函数、注释与重构。",
+      "intro": "本书给出编写整洁代码的原则与实践：有意义的命名、短小的函数、恰当的注释、清晰的错误处理与单元测试。它不是风格指南，而是一份职业态度。",
+      "authorBio": "Robert C. Martin（Uncle Bob），软件工程师、作家，敏捷宣言签署人之一。"
+    },
+    {
+      "sku": "BK-006", "title": "Java 核心技术 卷I（第12版）", "author": "Cay S. Horstmann", "categoryCode": "tech", "categoryName": "计算机技术",
+      "price": 149.00, "originalPrice": 179.00, "stock": 56, "publisher": "机械工业出版社", "isbn": "9787111636663",
+      "pages": 736, "pubDate": "2019-12", "rating": 9.2, "tag": "新书", "sales": 860, "tone": "navy", "featured": false,
+      "summary": "Java 基础与面向对象编程的权威教程。",
+      "intro": "从基本语法到面向对象、泛型、集合、lambda 与并发，本书系统讲解了 Java SE 的核心知识，并配有大量可直接运行的示例。",
+      "authorBio": "Cay S. Horstmann，圣何塞州立大学教授，Java 领域畅销书作者。"
+    },
+    {
+      "sku": "BK-007", "title": "万历十五年", "author": "黄仁宇", "categoryCode": "hist", "categoryName": "历史人文",
+      "price": 36.00, "originalPrice": 42.00, "stock": 96, "publisher": "中华书局", "isbn": "9787101046120",
+      "pages": 300, "pubDate": "2006-08", "rating": 9.0, "tag": "经典", "sales": 1450, "tone": "sand", "featured": false,
+      "summary": "从一个平常年份，看一个王朝的困局。",
+      "intro": "1587年，表面上四海升平，实则种种积弊已成。黄仁宇以万历皇帝、张居正、海瑞、戚继光、李贽等人的命运为线索，写出明代政治与制度的深层困境。",
+      "authorBio": "黄仁宇（1918—2000），历史学家，著有《万历十五年》《中国大历史》。"
+    },
+    {
+      "sku": "BK-008", "title": "人类简史", "author": "尤瓦尔·赫拉利", "categoryCode": "hist", "categoryName": "历史人文",
+      "price": 68.00, "originalPrice": 98.00, "stock": 134, "publisher": "中信出版社", "isbn": "9787508647357",
+      "pages": 440, "pubDate": "2014-11", "rating": 9.1, "tag": "热销", "sales": 4120, "tone": "wine", "featured": true,
+      "summary": "从认知革命到人工智能，重新理解人类如何走到今天。",
+      "intro": "十万年前，地球上至少有六个人种，为什么最后只剩下我们？赫拉利用“认知革命、农业革命、科学革命”三条线索，重述智人如何凭借虚构故事统治世界。",
+      "authorBio": "尤瓦尔·赫拉利，牛津大学历史学博士，耶路撒冷希伯来大学教授。",
+      "toc": ["第一部分 认知革命", "第二部分 农业革命", "第三部分 人类的融合统一", "第四部分 科学革命"]
+    },
+    {
+      "sku": "BK-009", "title": "中国历代政治得失", "author": "钱穆", "categoryCode": "hist", "categoryName": "历史人文",
+      "price": 32.00, "originalPrice": 38.00, "stock": 70, "publisher": "生活·读书·新知三联书店", "isbn": "9787108009319",
+      "pages": 180, "pubDate": "2012-07", "rating": 9.2, "tag": "经典", "sales": 760, "tone": "clay", "featured": false,
+      "summary": "钱穆讲汉、唐、宋、明、清五代政治制度得失。",
+      "intro": "本书由钱穆先生五次演讲整理而成，以汉、唐、宋、明、清五代为纲，讲政府组织、考试选举、赋税兵役，指出制度必须与人事相配合。",
+      "authorBio": "钱穆（1895—1990），历史学家、思想家，著有《国史大纲》《先秦诸子系年》。"
+    },
+    {
+      "sku": "BK-010", "title": "原则", "author": "瑞·达利欧", "categoryCode": "biz", "categoryName": "经济管理",
+      "price": 98.00, "originalPrice": 98.00, "stock": 45, "publisher": "中信出版社", "isbn": "9787508684031",
+      "pages": 592, "pubDate": "2018-01", "rating": 8.6, "tag": "热销", "sales": 1320, "tone": "plum", "featured": false,
+      "summary": "桥水创始人总结的生活与工作原则。",
+      "intro": "达利欧把四十多年的决策经验提炼成一套可复用的原则：极度求真、极度透明、创意择优。书中既有方法论，也有他反复失败后总结的教训。",
+      "authorBio": "瑞·达利欧，桥水基金创始人，《原则》作者。"
+    },
+    {
+      "sku": "BK-011", "title": "穷查理宝典", "author": "彼得·考夫曼", "categoryCode": "biz", "categoryName": "经济管理",
+      "price": 88.00, "originalPrice": 98.00, "stock": 38, "publisher": "中信出版社", "isbn": "9787508663449",
+      "pages": 560, "pubDate": "2016-09", "rating": 9.1, "tag": "经典", "sales": 990, "tone": "clay", "featured": false,
+      "summary": "查理·芒格的智慧箴言与多元思维模型。",
+      "intro": "本书收录了芒格的演讲、文章与访谈，系统呈现他的多元思维模型、逆向思考与人类误判心理学，是理解长期主义的入门读物。",
+      "authorBio": "彼得·考夫曼，编辑、投资人，长期整理芒格的演讲与文稿。"
+    },
+    {
+      "sku": "BK-012", "title": "小王子", "author": "圣埃克苏佩里", "categoryCode": "kids", "categoryName": "少儿读物",
+      "price": 32.00, "originalPrice": 45.00, "stock": 210, "publisher": "人民文学出版社", "isbn": "9787020042494",
+      "pages": 112, "pubDate": "2003-08", "rating": 9.3, "tag": "畅销", "sales": 2680, "tone": "honey", "featured": false,
+      "summary": "献给所有曾经是孩子的大人。",
+      "intro": "飞行员在撒哈拉沙漠遇见来自 B-612 星球的小王子。玫瑰、狐狸、国王与点灯人，构成了一则关于爱、责任与告别的寓言。",
+      "authorBio": "圣埃克苏佩里（1900—1944），法国作家、飞行员，代表作《小王子》《夜航》。"
+    },
+    {
+      "sku": "BK-013", "title": "夏洛的网", "author": "E.B.怀特", "categoryCode": "kids", "categoryName": "少儿读物",
+      "price": 25.00, "originalPrice": 32.00, "stock": 160, "publisher": "上海译文出版社", "isbn": "9787532733415",
+      "pages": 200, "pubDate": "2004-05", "rating": 9.1, "tag": "经典", "sales": 1560, "tone": "forest", "featured": false,
+      "summary": "一只蜘蛛用网上的字，救了一头小猪。",
+      "intro": "在朱克曼家的谷仓里，小猪威尔伯和蜘蛛夏洛成为朋友。当威尔伯面临被宰杀的命运，夏洛用蛛网织出一个个奇迹般的词。",
+      "authorBio": "E.B.怀特（1899—1985），美国作家，《纽约客》主要撰稿人，《夏洛的网》作者。"
+    },
+    {
+      "sku": "BK-014", "title": "美的历程", "author": "李泽厚", "categoryCode": "art", "categoryName": "艺术生活",
+      "price": 58.00, "originalPrice": 68.00, "stock": 52, "publisher": "生活·读书·新知三联书店", "isbn": "9787108030375",
+      "pages": 300, "pubDate": "2009-07", "rating": 9.2, "tag": "经典", "sales": 680, "tone": "clay", "featured": false,
+      "summary": "从远古图腾到明清文艺，一部中国美学简史。",
+      "intro": "李泽厚以十个章节勾勒中国审美意识的历史：青铜饕餮、魏晋风度、盛唐之音、宋元山水……把艺术放回社会与思想的脉络中理解。",
+      "authorBio": "李泽厚（1930—2021），哲学家、美学家，著有《美的历程》《批判哲学的批判》。"
+    },
+    {
+      "sku": "BK-015", "title": "艺术的故事", "author": "贡布里希", "categoryCode": "art", "categoryName": "艺术生活",
+      "price": 280.00, "originalPrice": 328.00, "stock": 24, "publisher": "广西美术出版社", "isbn": "9787549400044",
+      "pages": 688, "pubDate": "2014-11", "rating": 9.7, "tag": "典藏", "sales": 420, "tone": "sand", "featured": true,
+      "summary": "西方艺术史入门经典，从洞穴壁画到现代主义。",
+      "intro": "贡布里希用清晰而优雅的语言讲述从史前到当代的艺术历程，强调“没有大写的艺术，只有艺术家”。全书配以大量高清图版，是艺术史入门的不二之选。",
+      "authorBio": "E.H.贡布里希（1909—2001），艺术史学家，著有《艺术的故事》《秩序感》。",
+      "toc": ["第一章 奇特的起源", "第五章 美的王国", "第十一章 朝臣和市民", "第二十五章 持久的革命", "第二十八章 实验性美术"]
+    }
+  ]
+}
