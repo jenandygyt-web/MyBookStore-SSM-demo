@@ -1,6 +1,16 @@
 -- MyBookStore.`user` 定义
 create database if not exists MyBookStore character set utf8mb4 collate utf8mb4_0900_ai_ci;
 use MyBookStore;
+
+-- 开发环境重建：按外键依赖逆序清理旧表（会清空数据，生产环境勿执行）
+drop table if exists `order_item`;
+drop table if exists `cart_item`;
+drop table if exists `product_image`;
+drop table if exists `order`;
+drop table if exists `product`;
+drop table if exists `category`;
+drop table if exists `user`;
+
 CREATE TABLE `user` (
                         `id` bigint NOT NULL AUTO_INCREMENT,
                         `username` varchar(100) DEFAULT NULL,
@@ -10,7 +20,7 @@ CREATE TABLE `user` (
                         `phone` varchar(100) DEFAULT NULL,
                         `email` varchar(100) DEFAULT NULL,
                         `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        `update_at` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+                        `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `user_unique` (`username`),
                         CONSTRAINT `user_check` CHECK ((char_length(trim(`password`)) > 0)),
@@ -71,7 +81,7 @@ CREATE TABLE `order` (
                          CONSTRAINT `order_check` CHECK ((char_length(trim(`order_no`)) > 0)),
                          CONSTRAINT `order_check_1` CHECK ((`total_amount` > 0)),
                          CONSTRAINT `order_check_2` CHECK (((char_length(trim(`receiver_name`)) > 0) and (char_length(trim(`receiver_phone`)) > 0) and (char_length(trim(`receiver_address`)) > 0))),
-                         CONSTRAINT `order_check_3` CHECK ((`status` in (_utf8mb4'PENDING_PAYMENT',_utf8mb4'PAID',_utf8mb4'SHIPPED',_utf8mb4'COMPELTED',_utf8mb4'CANCELLED'))),
+                         CONSTRAINT `order_check_3` CHECK ((`status` in (_utf8mb4'PENDING_PAYMENT',_utf8mb4'PAID',_utf8mb4'SHIPPED',_utf8mb4'COMPLETED',_utf8mb4'CANCELLED'))),
                          CONSTRAINT `order_check_4` CHECK ((((`status` in (_utf8mb4'PENDING_PAYMENT',_utf8mb4'CANCELLED')) and (`payment_method` is null) and (`payment_no` is null) and (`paid_at` is null)) or ((`status` in (_utf8mb4'PAID',_utf8mb4'SHIPPED',_utf8mb4'COMPLETED')) and (`payment_method` is not null) and (`payment_method` = _utf8mb4'MOCK') and (`payment_no` is not null) and (char_length(trim(`payment_no`)) > 0) and (`paid_at` is not null)))),
                          CONSTRAINT `order_check_5` CHECK ((((`status` = _utf8mb4'CANCELLED') and (`cancelled_at` is not null)) or ((`status` <> _utf8mb4'CANCELLED') and (`cancelled_at` is null)))),
                          CONSTRAINT `order_check_6` CHECK ((((`status` in (_utf8mb4'SHIPPED',_utf8mb4'COMPLETED')) and (`shipped_at` is not null)) or ((`status` not in (_utf8mb4'SHIPPED',_utf8mb4'COMPLETED')) and (`shipped_at` is null)))),

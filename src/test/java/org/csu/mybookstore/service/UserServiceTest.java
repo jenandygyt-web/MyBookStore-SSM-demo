@@ -64,7 +64,7 @@ class UserServiceTest {
         user.setDisplayName("Alice");
         user.setRole("CUSTOMER");
         user.setStatus("ENABLED");
-        user.setPasswordHash("$2a$10$secretHashShouldNotLeak");
+        user.setPassword("$2a$10$secretHashShouldNotLeak");
 
         when(userMapper.selectOne(any(Wrapper.class))).thenReturn(user);
 

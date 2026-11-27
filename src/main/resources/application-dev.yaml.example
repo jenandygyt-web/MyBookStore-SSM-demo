@@ -1,0 +1,14 @@
+# 本地开发配置模板（可提交进仓库）
+# 使用方法：复制本文件为同目录下的 application-dev.yaml，并把 password 改成你本机的 MySQL 密码
+# application-dev.yaml 已被 .gitignore 忽略，不会被提交
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://127.0.0.1:3307/MyBookStore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai"
+    username: root
+    password: "<your-password>"
+    hikari:
+      connection-init-sql: "SET time_zone = '+08:00'"
+  sql:
+    init:
+      mode: never
