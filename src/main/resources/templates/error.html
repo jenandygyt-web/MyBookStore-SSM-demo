@@ -16,7 +16,7 @@
         <h2 th:text="${status} == 404 ? '页面未找到' : '页面暂时无法显示'">页面未找到</h2>
         <p class="muted">你要找的书页可能已被翻过，或者链接地址有误。</p>
         <div class="cta-row" style="justify-content: center; margin-top: 26px;">
-          <a class="btn btn--accent" th:href="@{/home}">回到首页</a>
+          <a class="btn btn--accent" th:href="@{/main}">回到首页</a>
           <a class="btn btn--ghost" th:href="@{/category}">去逛逛书店</a>
         </div>
       </div>

@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * 教学账号，对应 MyPetStore 数据库中的 store_user 表。
+ * 教学账号，对应 mybookstore 数据库中的 store_user 表。
  */
 @Data
 @TableName("store_user")
