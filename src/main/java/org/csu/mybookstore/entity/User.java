@@ -3,6 +3,7 @@ package org.csu.mybookstore.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,7 @@ import java.time.LocalDateTime;
 /**
  * 教学账号，对应 MyPetStore 数据库中的 store_user 表。
  */
-@Getter
-@Setter
+@Data
 @TableName("store_user")
 public class User {
 
@@ -24,7 +24,7 @@ public class User {
     private String username;
 
     /** BCrypt 散列，不保存明文密码 */
-    private String passwordHash;
+    private String password;
 
     /** 显示名称 */
     private String displayName;
