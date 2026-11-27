@@ -10,7 +10,7 @@
 <main>
   <div class="wrap">
     <nav class="breadcrumb" style="margin-top: 26px;">
-      <a th:href="@{/home}">首页</a><span>/</span>
+      <a th:href="@{/main}">首页</a><span>/</span>
       <a th:href="@{/category}">全部图书</a><span>/</span>
       <a th:href="@{/category(c=${book.categoryCode})}" th:text="${book.categoryName}">文学小说</a><span>/</span>
       <b th:text="${book.title}">活着</b>

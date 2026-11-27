@@ -50,23 +50,6 @@ public class PageController {
         return catalog.categories();
     }
 
-    /** 欢迎页：品牌介绍 + 登录入口。 */
-    @GetMapping({"/", "/index.html"})
-    public String index(Model model) {
-        model.addAttribute("picks", catalog.editorsPicks());
-        return "index";
-    }
-
-    /** 首页。 */
-    @GetMapping({"/home", "/Main.html"})
-    public String home(Model model) {
-        model.addAttribute("featured", catalog.first("BK-008"));
-        model.addAttribute("newBooks", catalog.newArrivals());
-        model.addAttribute("picks", catalog.editorsPicks());
-        model.addAttribute("ranking", catalog.bestsellers());
-        return "main";
-    }
-
     /** 图书列表：支持分类、关键词、价格区间与排序。 */
     @GetMapping({"/category", "/Category.html"})
     public String category(
@@ -160,12 +143,12 @@ public class PageController {
     /** 演示环境没有认证逻辑：提交后直接回到首页。 */
     @PostMapping("/login")
     public String doLogin() {
-        return "redirect:/home";
+        return "redirect:/main";
     }
 
     @PostMapping("/register")
     public String doRegister() {
-        return "redirect:/home";
+        return "redirect:/main";
     }
 
     /** 会员中心：个人资料。 */

@@ -1,16 +1,16 @@
--- MyPetStore实验一：仅表结构（不含业务数据）
+-- MyBookStore实验一：仅表结构（不含业务数据）
 -- 适用：MySQL 8.0.16+ / 8.4，InnoDB，utf8mb4。
 -- 与02-schema-with-demo.sql二选一，不按编号依次执行。
--- 在空的MyPetStore中首次执行；不DROP、不清空、不覆盖已有表。
+-- 在空的mybookstore中首次执行；不DROP、不清空、不覆盖已有表。
 -- 已有同名表时会报错，请检查目标数据库，不要使用mysql --force跳过错误。
 -- 本文件不创建数据库账号，不配置应用密码，也不会由应用启动时自动执行。
 
 SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 SET SESSION time_zone = '+08:00';
 
-CREATE DATABASE IF NOT EXISTS MyPetStore
+CREATE DATABASE IF NOT EXISTS mybookstore
     CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE MyPetStore;
+USE mybookstore;
 
 -- ===== 七张表的统一结构开始 =====
 
