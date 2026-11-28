@@ -52,26 +52,14 @@
       </section>
 
       <section class="category-strip" aria-label="宠物分类">
-        <a th:href="@{/category}">
-          <span class="category-icon">🐕</span>
-          <b>犬类</b><small>DOGS</small>
-        </a>
-        <a th:href="@{/category}">
-          <span class="category-icon">🐈</span>
-          <b>猫咪</b><small>CATS</small>
-        </a>
-        <a th:href="@{/category}">
-          <span class="category-icon">🐠</span>
-          <b>水族</b><small>FISH</small>
-        </a>
-        <a th:href="@{/category}">
-          <span class="category-icon">🦜</span>
-          <b>鸟类</b><small>BIRDS</small>
-        </a>
-        <a th:href="@{/category}">
-          <span class="category-icon">🦎</span>
-          <b>爬宠</b><small>REPTILES</small>
-        </a>
+        <div class="category-entry" th:each="root : ${categoryNavigation}">
+          <a th:href="@{/category}">
+            <b th:text="${root.name}">分类名</b><small th:text="${root.code}">CODE</small>
+          </a>
+          <div class="category-entry__children" th:if="${!#lists.isEmpty(root.children)}">
+            <a th:each="child : ${root.children}" th:href="@{/category}" th:text="${child.name}">子分类</a>
+          </div>
+        </div>
       </section>
 
       <section class="home-section">
@@ -80,24 +68,22 @@
           <a th:href="@{/category}">更多新品 <span>→</span></a>
         </div>
         <div class="new-grid">
-          <a class="feature-product" th:href="@{/product/CT-SIA-05}">
-            <img th:src="@{/images/products/CT-SIA-05/1.jpg}" alt="白色猫咪" />
+          <a class="feature-product" th:each="product, stat : ${newProducts}" th:if="${stat.index == 0}"
+             th:href="@{/product/{id}(id=${product.id})}">
+            <img th:src="@{${product.coverImage}}" th:alt="${product.name}" />
             <span class="feature-product__tag">NEW</span>
             <div class="feature-product__info">
-              <small>猫咪 · 新成员</small>
-              <h3>暹罗猫护理组合</h3>
-              <p>主粮、护理与玩具，一次配齐。</p>
-              <strong>$72.40</strong>
+              <small th:text="${product.sku}">SKU</small>
+              <h3 th:text="${product.name}">商品名</h3>
+              <p th:text="${product.summary}">简介</p>
+              <strong th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}">$0.00</strong>
             </div>
           </a>
           <div class="new-list">
-            <a th:href="@{/product/AQ-KOI-04}">
-              <img th:src="@{/images/products/AQ-KOI-04/1.jpg}" alt="珊瑚观赏鱼" />
-              <span><small>水族新品</small><b>观赏级锦鲤</b><strong>$18.50</strong></span>
-            </a>
-            <a th:href="@{/product/RP-IGU-09}">
-              <img th:src="@{/images/products/RP-IGU-09/1.jpg}" alt="绿鬣蜥" />
-              <span><small>爬宠入门</small><b>绿鬣蜥新手套装</b><strong>$76.00</strong></span>
+            <a th:each="product, stat : ${newProducts}" th:if="${stat.index > 0}"
+               th:href="@{/product/{id}(id=${product.id})}">
+              <img th:src="@{${product.coverImage}}" th:alt="${product.name}" />
+              <span><small th:text="${product.sku}">SKU</small><b th:text="${product.name}">商品名</b><strong th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}">$0.00</strong></span>
             </a>
           </div>
         </div>
@@ -112,30 +98,6 @@
           <h2>用心选好物，专业控品质</h2>
           <p>每一件商品都经过真实场景筛选，让陪伴更轻松。</p>
           <a th:href="@{/category}">立即选购 <span>→</span></a>
-        </div>
-      </section>
-
-      <section class="home-section">
-        <div class="home-section__head">
-          <div><span>TOP SELLING</span><h2>本周热卖</h2></div>
-          <a th:href="@{/category}">查看榜单 <span>→</span></a>
-        </div>
-        <div class="hot-grid">
-          <a th:href="@{/product/K9-BGL-03}">
-            <img th:src="@{/images/products/K9-BGL-03/1.jpg}" alt="比格犬" />
-            <span class="rank">01</span>
-            <div><small>高人气陪伴犬</small><h3>Beagle 比格犬</h3><strong>$59.90</strong></div>
-          </a>
-          <a th:href="@{/product/FL-DLH-02}">
-            <img th:src="@{/images/products/FL-DLH-02/1.jpg}" alt="波斯猫" />
-            <span class="rank">02</span>
-            <div><small>温柔室内伙伴</small><h3>Persian 波斯猫</h3><strong>$93.50</strong></div>
-          </a>
-          <a th:href="@{/product/AQ-CRF-12}">
-            <img th:src="@{/images/products/AQ-CRF-12/1.jpg}" alt="珊瑚礁观赏鱼" />
-            <span class="rank">03</span>
-            <div><small>水族精选</small><h3>珊瑚礁观赏鱼</h3><strong>$48.90</strong></div>
-          </a>
         </div>
       </section>
 
@@ -155,33 +117,12 @@
           <a th:href="@{/category}">全部商品 <span>→</span></a>
         </div>
         <div class="recommend-grid">
-          <article>
-            <a class="recommend-media" th:href="@{/product/K9-RTV-11}"><img th:src="@{/images/products/K9-RTV-11/3.jpg}" alt="金毛犬" /><span>热卖</span></a>
-            <small>DOGS · 健康保障</small>
-            <h3><a th:href="@{/product/K9-RTV-11}">金毛犬精品陪伴套餐</a></h3>
-            <p>亲人稳定，附基础护理包</p>
-            <div><strong>$118.00</strong><a th:href="@{/cart}" aria-label="加入购物车">＋</a></div>
-          </article>
-          <article>
-            <a class="recommend-media" th:href="@{/product/CT-SIA-05}"><img th:src="@{/images/products/CT-SIA-05/3.jpg}" alt="暹罗猫" /></a>
-            <small>CATS · 7天保障</small>
-            <h3><a th:href="@{/product/CT-SIA-05}">暹罗猫日常护理组合</a></h3>
-            <p>主粮与互动玩具组合</p>
-            <div><strong>$72.40</strong><a th:href="@{/cart}" aria-label="加入购物车">＋</a></div>
-          </article>
-          <article>
-            <a class="recommend-media" th:href="@{/product/BR-CNR-08}"><img th:src="@{/images/products/BR-CNR-08/1.jpg}" alt="金丝雀" /><span>新品</span></a>
-            <small>BIRDS · 营养精选</small>
-            <h3><a th:href="@{/product/BR-CNR-08}">金丝雀健康养护包</a></h3>
-            <p>日常饲料与营养补充</p>
-            <div><strong>$36.80</strong><a th:href="@{/cart}" aria-label="加入购物车">＋</a></div>
-          </article>
-          <article>
-            <a class="recommend-media" th:href="@{/product/RP-SNK-02}"><img th:src="@{/images/products/RP-SNK-02/2.jpg}" alt="玉米蛇" /></a>
-            <small>REPTILES · 入门友好</small>
-            <h3><a th:href="@{/product/RP-SNK-02}">玉米蛇入门饲养套件</a></h3>
-            <p>环境用品与饲养指南</p>
-            <div><strong>$88.00</strong><a th:href="@{/cart}" aria-label="加入购物车">＋</a></div>
+          <article th:each="product : ${featuredProducts}">
+            <a class="recommend-media" th:href="@{/product/{id}(id=${product.id})}"><img th:src="@{${product.coverImage}}" th:alt="${product.name}" /></a>
+            <small th:text="${product.sku}">SKU</small>
+            <h3><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">商品名</a></h3>
+            <p th:text="${product.summary}">简介</p>
+            <div><strong th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}">$0.00</strong><a th:href="@{/cart}" aria-label="加入购物车">＋</a></div>
           </article>
         </div>
       </section>
